@@ -1,53 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All downloader app by Raja </title>
-    <style>
-     body {
-    font-family : Arial, Helvetica, sans-serif;
- max-width: 500px;
-margin : 50px auto;
-text-align: center;
-background: #f4f4f4;
-}
-input {
-    width: 80%;
-    padding:10px;
-    font-size: 16px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Downloader web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14102B;
+    --card: #201A42;
+    --accent: #FFB454;
+    --accent-2: #5EEAD4;
+    --text: #F5F3FF;
+    --text-dim: #A79FC9;
+  }
 
+  * { box-sizing: border-box; }
 
-}
-button {
-    padding: 10px 20 px;    
-    font-size: 16px;
-    background: #2563eb;
-    color: white;
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at 20% -10%, #2a1f57 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .wrap { max-width: 560px; width: 100%; }
+
+  /* ---- Hero / Judul ---- */
+  .hero { text-align: center; margin-bottom: 32px; }
+
+  .eq {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    height: 24px;
+    margin-bottom: 12px;
+  }
+  .eq span {
+    width: 4px;
+    background: var(--accent-2);
+    border-radius: 2px;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .eq span:nth-child(1) { animation-delay: 0s; }
+  .eq span:nth-child(2) { animation-delay: 0.15s; }
+  .eq span:nth-child(3) { animation-delay: 0.3s; }
+  .eq span:nth-child(4) { animation-delay: 0.15s; }
+  .eq span:nth-child(5) { animation-delay: 0s; }
+
+  @keyframes bounce {
+    0%, 100% { height: 6px; }
+    50% { height: 22px; }
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.4rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  h1 .accent { color: var(--accent); }
+
+  .tagline {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-top: 8px;
+  }
+
+  /* ---- Kotak pencarian ---- */
+  .search-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 8px;
+    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.6);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  #videoUrl {
+    flex: 1;
+    background: transparent;
     border: none;
-    border-radius:5px;
+    outline: none;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    padding: 14px 16px;
+  }
+  #videoUrl::placeholder { color: var(--text-dim); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #14102B;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    padding: 0 22px;
     cursor: pointer;
-    margin-top: 10px;
-}
-#result {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -6px rgba(255,180,84,0.5);
+  }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* ---- Area hasil ---- */
+  .result {
     margin-top: 20px;
-}
+    text-align: center;
+  }
 
+  .result-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 20px;
+    animation: fadeIn 0.35s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-    </style>
+  .result-card img {
+    width: 100%;
+    max-width: 280px;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+
+  .result-card h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .download-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .dl-btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.15s ease;
+  }
+  .dl-btn:hover { transform: translateY(-2px); }
+
+  .dl-mp4 { background: var(--accent); color: #14102B; }
+  .dl-mp3 { background: transparent; color: var(--accent-2); border: 1px solid var(--accent-2); }
+
+  .status-text { color: var(--text-dim); font-size: 0.9rem; }
+  .error-text { color: #FF8A8A; font-size: 0.9rem; }
+
+  /* Loading bar mini */
+  .loading-eq {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    height: 20px;
+    margin: 8px 0;
+  }
+  .loading-eq span {
+    width: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+    animation: bounce 0.8s ease-in-out infinite;
+  }
+  .loading-eq span:nth-child(2) { animation-delay: 0.1s; }
+  .loading-eq span:nth-child(3) { animation-delay: 0.2s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eq span, .loading-eq span, .result-card { animation: none !important; }
+  }
+
+  @media (max-width: 480px) {
+    .input-row { flex-direction: column; }
+    .btn-primary { padding: 12px; }
+  }
+</style>
 </head>
 <body>
 
-    <h1>All APK downloader </h1>
-    <p>tempel link video dibawah ini</p>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eq" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <h1>All<span class="accent">Downloader</span></h1>
+      <p class="tagline">Tempel link video, ambil versi MP4 atau MP3-nya dalam sekejap.</p>
+    </header>
 
-        <input type="text" id="videoUrl" placeholder="https://...">
-        <br>
-        <button onclick="handleDownload()">Cari Video</button>"
+    <div class="search-card">
+      <div class="input-row">
+        <input type="text" id="videoUrl" placeholder="Tempel link video di sini...">
+        <button class="btn-primary" id="searchBtn" onclick="handleDownload()">Cari Video</button>
+      </div>
+    </div>
 
-    <div id ="result"></div>
+    <div id="result" class="result"></div>
+  </div>
 
-    <script src="script.js"></script>
-    
+  <script src="script.js"></script>
 </body>
 </html>
