@@ -32,10 +32,15 @@ async function handleDownload() {
     }
 
     resultDiv.innerHTML = `
-      <h3>${data.title}</h3>
-      <img src="${data.thumbnail}" width="200"><br>
-      <p>Video ditemukan. (Link download akan kita tambahkan di step berikutnya)</p>
-    `;
+  <h3>${data.title}</h3>
+  <img src="${data.thumbnail}" width="200"><br>
+  <a href="/fetch?url=${encodeURIComponent(videoUrl)}&type=mp4">
+    <button>Download MP4</button>
+  </a>
+  <a href="/fetch?url=${encodeURIComponent(videoUrl)}&type=mp3">
+    <button>Download MP3</button>
+  </a>
+`;
 
   } catch (error) {
     resultDiv.innerHTML = '<p style="color:red">Terjadi kesalahan, coba lagi.</p>';
